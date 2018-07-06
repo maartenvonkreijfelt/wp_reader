@@ -70,6 +70,41 @@ jQuery( document ).ready(function($){
                 '</li>';
             $('.navigation-list ul').append(nav_list_item);
         }
+        post_trigger();
+    }
+
+    function post_trigger() {
+        $('.navigation-list a').on('click', get_post);
+        $('.navigation-list a').first().trigger('click');
+    }
+
+    // Get the post selected from the navigation list.
+    function get_post() {
+
+        var post_id = $(this).attr('data-id');
+
+        // Create REST API request.
+        var json_url = rest_url + 'posts/' + post_id + '?_embed=true';
+
+        // AJAX the post data
+        $.ajax({
+            dataType: 'json',
+     		url : json_url
+     	})
+
+        .done(function(object) {
+            // Get the post data.
+            console.log(object);
+        })
+
+        .fail(function() {
+            $('.site-header').append('<div class="error">That didn&rsquo;t work. Try slecting a different post or try a new URL.</div>');
+            console.log('ERROR: Single post error.');
+        })
+
+        .always(function() {
+            console.log( 'Single post AJAX complete' );
+        });
     }
 
 });

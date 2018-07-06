@@ -44,7 +44,7 @@ jQuery( document ).ready(function($){
         })
 
         .done(function(object){
-            console.log(object);
+            create_post_list(object);
         })
 
         .fail(function() {
@@ -57,5 +57,19 @@ jQuery( document ).ready(function($){
         })
     }
 
+    function create_post_list(object) {
+        $('.navigation-list').empty().append('<ul></ul>');
+        var nav_list_item;
+
+        for(var i=0; i<object.length; i++) {
+            nav_list_item =
+                '<li>' +
+                '<a href="javascript:void(0)" data-id="' + object[i].id + '">' +
+                object[i].title.rendered +
+                '</a>' +
+                '</li>';
+            $('.navigation-list ul').append(nav_list_item);
+        }
+    }
 
 });
